@@ -1,7 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flash_chat/components/rounded_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'chat_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -22,7 +23,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
-        child: SingleChildScrollView( // 스크롤을 줘서 UI 버그를 막는다.
+        child: SingleChildScrollView(
+          // 스크롤을 줘서 UI 버그를 막는다.
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -44,8 +46,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onChanged: (value) {
                   email = value;
                 },
-                decoration:
-                    kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
               ),
               SizedBox(
                 height: 8.0,
@@ -57,8 +58,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onChanged: (value) {
                   password = value;
                 },
-                decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your password'),
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password'),
               ),
               SizedBox(
                 height: 24.0,
@@ -68,9 +68,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 colour: Colors.blueAccent,
                 onPressed: () async {
                   try {
-                    final newUser = await _auth.createUserWithEmailAndPassword(
-                        email: email.trim(), password: password.trim());
-                    if(newUser != null){
+                    final newUser = await _auth.createUserWithEmailAndPassword(email: email.trim(), password: password.trim());
+                    if (newUser != null) {
                       Navigator.pushNamed(context, ChatScreen.id);
                     }
                   } catch (e) {

@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/components/rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flash_chat/components/rounded_button.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:toast/toast.dart';
 
@@ -31,7 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Flexible(  // logo 이미지를 줄여서 UI 버그를 막는다.
+              Flexible(
+                // logo 이미지를 줄여서 UI 버그를 막는다.
                 child: Hero(
                   tag: 'logo',
                   child: Container(
@@ -50,8 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onChanged: (value) {
                   email = value;
                 },
-                decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your email'),
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
               ),
               SizedBox(
                 height: 8.0,
@@ -63,8 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onChanged: (value) {
                   password = value;
                 },
-                decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your password'),
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password'),
               ),
               SizedBox(
                 height: 24.0,
@@ -76,15 +75,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   setState(() {
                     _saving = true;
                   });
-                  final user = await _auth
-                      .signInWithEmailAndPassword(
-                          email: email.trim(), password: password.trim())
-                      .catchError((e) {
+                  final user = await _auth.signInWithEmailAndPassword(email: email.trim(), password: password.trim()).catchError((e) {
                     setState(() {
                       _saving = false;
-                      Toast.show("로그인 실패", context,
-                          duration: Toast.LENGTH_SHORT,
-                          gravity: Toast.BOTTOM);
+                      Toast.show("로그인 실패", context, duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
                     });
                     print(e);
                   });
