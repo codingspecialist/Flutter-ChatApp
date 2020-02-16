@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flash_chat/constants.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/constants.dart';
+import 'package:flutter/material.dart';
 
 final _firestore = Firestore.instance;
 FirebaseUser loginCurrentUser;
@@ -77,13 +77,13 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      messageTextController
-                          .clear(); // controller를 달면 다른 위젯에서 영향을 미칠 수 있다.
+                      messageTextController.clear(); // controller를 달면 다른 위젯에서 영향을 미칠 수 있다.
                       //messageText + loginCurrentUser.email
                       _firestore.collection('messages').add({
                         'text': messageText,
                         'sender': loginCurrentUser.email,
-                        'date': FieldValue.serverTimestamp() // 고유ID는 자동정렬을 지원하지 않기에 추가
+                        'date': FieldValue.serverTimestamp()
+                        // 고유ID는 자동정렬을 지원하지 않기에 추가
                       });
                     },
                     child: Text(
@@ -120,7 +120,6 @@ class MessageStream extends StatelessWidget {
         for (var message in messages) {
           final messageText = message.data['text'];
           final messageSender = message.data['sender'];
-
           final currentUser = loginCurrentUser.email;
 
           final messageBubble = MessageBubble(
@@ -144,8 +143,7 @@ class MessageStream extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  const MessageBubble(
-      {@required this.sender, @required this.text, @required this.isMe});
+  const MessageBubble({@required this.sender, @required this.text, @required this.isMe});
 
   final String sender;
   final String text;
@@ -163,19 +161,16 @@ class MessageBubble extends StatelessWidget {
             style: TextStyle(fontSize: 12.0, color: Colors.black54),
           ),
           Material(
-            borderRadius: isMe ? BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                bottomLeft: Radius.circular(30.0),
-                bottomRight: Radius.circular(30.0)) : BorderRadius.only(bottomLeft: Radius.circular(30.0),
-                bottomRight: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+            borderRadius: isMe
+                ? BorderRadius.only(topLeft: Radius.circular(30.0), bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0))
+                : BorderRadius.only(bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0), topRight: Radius.circular(30.0)),
             elevation: 5.0, //그림자 효과
             color: isMe ? Colors.lightBlueAccent : Colors.white,
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
                 text,
-                style: TextStyle(color: isMe ? Colors.white :  Colors.black45, fontSize: 15.0),
+                style: TextStyle(color: isMe ? Colors.white : Colors.black45, fontSize: 15.0),
               ),
             ),
           ),
